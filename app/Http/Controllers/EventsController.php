@@ -30,11 +30,6 @@ class EventsController extends BaseController
         return Event::all();
     }
 
-
-//    public function getEventsWithWorkshops()
-//    {
-//
-//    }
     /* TODO: complete getEventsWithWorkshops so that it returns all events including the workshops
      Requirements:
     - maximum 2 sql queries
@@ -202,7 +197,12 @@ class EventsController extends BaseController
     ```
      */
 
-    public function getFutureEventsWithWorkshops() {
-        throw new \Exception('implement in coding task 2');
+    /**
+     * @return EventResourceCollection
+     * @throws \Exception
+     */
+    public function getFutureEventsWithWorkshops(): EventResourceCollection
+    {
+        return new EventResourceCollection($this->eventsService->getFutureEventsWithWorkshops());
     }
 }

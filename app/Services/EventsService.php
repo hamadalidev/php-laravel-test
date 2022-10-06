@@ -27,6 +27,13 @@ class EventsService
     public function getEventsWithWorkshops()
     {
         return $this->eventRepository->getEventsWithWorkshops();
+    }
 
+    /**
+     * @return Builder|Collection
+     */
+    public function getFutureEventsWithWorkshops()
+    {
+        return $this->eventRepository->getFutureEventsWithWorkshops();
     }
 }

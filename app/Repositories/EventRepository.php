@@ -17,4 +17,18 @@ class EventRepository
        $query = Event::query();
        return $query->with('workShops')->get();
     }
+
+    /**
+     * @return Builder|Collection
+     */
+    public function getFutureEventsWithWorkshops()
+    {
+        $query = Event::query();
+
+        return $query->whereHas('workShops', function($q) {
+            $q->where('start', '>', now());
+        })
+            ->with('workShops')
+            ->get();
+    }
 }
