@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Event\EventResourceCollection;
 use App\Models\Event;
+use App\Services\EventsService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -11,10 +13,28 @@ use Illuminate\Support\Facades\Date;
 
 class EventsController extends BaseController
 {
+    /**
+     * @var EventsService
+     */
+    private $eventsService;
+
+    /**
+     * @param EventsService $eventsService
+     */
+    public function __construct(EventsService $eventsService)
+    {
+        $this->eventsService = $eventsService;
+    }
+
     public function getWarmupEvents() {
         return Event::all();
     }
 
+
+//    public function getEventsWithWorkshops()
+//    {
+//
+//    }
     /* TODO: complete getEventsWithWorkshops so that it returns all events including the workshops
      Requirements:
     - maximum 2 sql queries
@@ -100,8 +120,12 @@ class EventsController extends BaseController
     ]
      */
 
-    public function getEventsWithWorkshops() {
-        throw new \Exception('implement in coding task 1');
+    /**
+     * @return EventResourceCollection
+     */
+    public function getEventsWithWorkshops(): EventResourceCollection
+    {
+        return new EventResourceCollection($this->eventsService->getEventsWithWorkshops());
     }
 
 
